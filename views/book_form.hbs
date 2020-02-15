@@ -35,7 +35,7 @@
             {{#each genres}}
             <div style="display: inline; padding-right: 10px;">
                 <input type="checkbox" class="checkbox-input" name="genre" id="{{this._id}}" value="{{this._id}}"
-                {{#check_with_all this._id ../book.genre}}checked{{/check_with_all}}>
+                {{#if ../book}}{{#check_with_all this._id ../book.genre}}checked{{/check_with_all}}{{/if}}>
                 <label for="{{this._id}}">{{this.name}}</label>
             </div>
             {{/each}}

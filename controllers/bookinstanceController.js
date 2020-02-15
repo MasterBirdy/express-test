@@ -8,7 +8,6 @@ var async = require("async");
 hbs.registerHelper("if_meh_eq", function(a, b, opts) {
     let compA = a.toString();
     let compB = b.toString();
-    console.log(compA + "|||" + compB);
     if (compA === compB)
         return opts.fn(this);
     else
@@ -74,7 +73,6 @@ exports.bookinstance_list = function(req, res, next) {
     .populate("book")
     .exec((err, list_bookinstances) => {
         if (err) {return next(err);}
-        console.log(list_bookinstances);
         res.render("bookinstance_list", 
         {title: "Book Instance List", bookinstance_list: list_bookinstances})
     });
@@ -91,7 +89,6 @@ exports.bookinstance_detail = function(req, res, next) {
             err.status = 404;
             return next(err);
         }
-        console.log(bookinstance);
         res.render("bookinstance_detail", {title: "Copy " + bookinstance.book.title, bookinstance: bookinstance});
     })
 };
@@ -201,7 +198,6 @@ exports.bookinstance_update_get = function(req, res, next) {
             err.status = 404;
             return next(err);
         }
-        console.log(results.bookInstance);
         res.render("bookinstance_form", {title: "Update BookInstance", book_list: results.books, bookinstance: results.bookInstance});
     });
 };

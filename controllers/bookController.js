@@ -9,10 +9,6 @@ var async = require('async');
 
 exports.index = async function(req, res) {
 
-        // const poop = await Book.countDocuments({});
-        // console.log(poop);
-        // console.log("iddd");
- 
     async.parallel({
         book_count: function(callback) {
             Book.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
@@ -30,7 +26,6 @@ exports.index = async function(req, res) {
             Genre.countDocuments({}, callback);
         }
     }, function(err, results) {
-        console.log(results);
         res.render('index', { title: 'Local Library Home', error: err, data: results });
     });
 };
@@ -48,7 +43,6 @@ const sorted_list_books = list_books.sort((a, b) => {
     let textB = b.title.toUpperCase();
     return (textA < textB) ? -1 : ((textA > textB) ? 1 : 0);
 });
-        console.log(sorted_list_books);
         res.render("book_list", {title: "Book List", book_list: sorted_list_books});
     });
 };
@@ -96,19 +90,23 @@ exports.book_create_get = function(req, res, next) {
 // Handle book create on POST.
 exports.book_create_post = [
     (req, res, next) => {
+        console.log(req.body.genre);
         if(!(req.body.genre instanceof Array)){
             if (typeof req.body.genre === "undefined")
                 req.body.genre = [];
-            else   
-                req.body.genre = new Array(req.body.genre);
         }
+        console.log(req.body.genre);
         next();
     },
     body("title", "Title must not be empty.").isLength({min: 1}).trim(),
     body("author", "Author must not be empty").isLength({min: 1}).trim(),
     body("summary", "Summary must not be empty.").isLength({min: 1}).trim(),
     body("isbn", "ISBN must not be empty").isLength({min: 1}).trim(),
-    sanitizeBody("*").escape(),
+    sanitizeBody("title").escape(),
+    sanitizeBody("author").escape(),
+    sanitizeBody("summary").escape(),
+    sanitizeBody("isbn").escape(),
+    sanitizeBody('genre.*').escape(),
     (req, res, next) => {
         const errors = validationResult(req);
         var book = new Book({
@@ -118,6 +116,7 @@ exports.book_create_post = [
             isbn: req.body.isbn,
             genre: req.body.genre
         });
+        console.log(book);
         if (!errors.isEmpty()) {
             async.parallel({
                 authors: function(callback) {

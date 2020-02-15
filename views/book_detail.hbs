@@ -3,7 +3,7 @@
 <p><strong>Summary: </strong>{{book.summary}}</p>
 <p><strong>Genre: </strong>
 {{#each book.genre}}
-<a href="{{this.url}}">{{this.name}}</a> {{#if_less_than @index book.genre.length}}, {{/if_less_than}}
+<a href="{{this.url}}">{{this.name}}</a>{{#if_less_than @index ../book.genre.length}}, {{/if_less_than}}
 {{/each}}
 <div style="margin-left:20px;margin-top:20px">
     {{#each book_instances}}

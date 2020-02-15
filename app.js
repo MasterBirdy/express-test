@@ -8,18 +8,26 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog'); 
 var wikiRouter = require("./routes/wiki");
+var compression = require('compression');
+var helmet = require('helmet');
 
 var app = express();
 
+app.use(helmet());
+
 var mongoose = require("mongoose");
-var mongoDB = "mongodb+srv://MasterBirdy:p2rESmZS@cluster0-ex2uu.azure.mongodb.net/test?retryWrites=true&w=majority";
+var dev_db_url = "mongodb+srv://MasterBirdy:p2rESmZS@cluster0-ex2uu.azure.mongodb.net/test?retryWrites=true&w=majority";
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+app.use(compression()); //Compress all routes
 
 app.use(logger('dev'));
 app.use(express.json());
