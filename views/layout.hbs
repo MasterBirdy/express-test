@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2">
+          <ul class="sidebar-nav">
+            <li>
+              <a href="/catalog">Home</a>
+            </li>
+            <li>
+              <a href="/catalog/books">All Books</a>
+            </li>
+            <li>
+              <a href="/catalog/authors">All Authors</a>
+            </li>
+            <li>
+              <a href="/catalog/genres">All Genres</a>
+            </li>
+            <li><a href="/catalog/bookinstances">All book instances</a></li>
+            <li>
+              <hr>
+            </li>
+            <li><a href="/catalog/author/create">Create New Author</a></li>
+            <li><a href="/catalog/genre/create">Create New Genre</a></li>
+            <li><a href="/catalog/book/create">Create New Book</a></li>
+            <li><a href="/catalog/bookinstance/create">Create Copy of Book (Book Instance)</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-10">
+              {{{body}}}
+        </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<h1>{{title}}</h1>
+
+<form action="" method="POST">
+    <div class="form-group">
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" 
+        placeholder="First name..." required="true" value="{{#if author}}{{author.first_name}}{{/if}}">
+        <label for="family_name">Family Name:</label>
+        <input type="text" name="family_name" id="family_name" class="form-control" 
+        placeholder="Family name..." required="true"  value="{{#if author}}{{author.family_name}}{{/if}}">
+    </div>
+    <div class="form-group">
+        <label for="date_of_birth">Date of birth:</label>
+        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" 
+        value="{{#if author}}{{#if author.date_of_birth}}{{author.date_of_birth_input}}{{/if}}{{/if}}">
+         <label for="date_of_death">Date of death:</label>
+        <input type="date" class="form-control" id="date_of_death" name="date_of_death"
+        value="{{#if author}}{{#if author.date_of_death}}{{author.date_of_death_input}}{{/if}}{{/if}}">
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    {{#if errors}}
+    <ul>
+        {{#each}}
+        <li>{{this.msg}}</li>
+        {{/each}}
+    </ul>
+    {{/if}}
+</form>

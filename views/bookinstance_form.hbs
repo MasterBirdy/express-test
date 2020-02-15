@@ -1,0 +1,41 @@
+<h1>{{title}}</h1>
+
+<form action="" method="POST">
+    <div class="form-group">
+        <label for="book">Book:</label>
+    <select name="book" id="book" placeholder="Select book" type="select" class="form-control" required="true">
+        {{#each_sort_name book_list "title"}}
+            {{#if ../bookinstance}}
+            <option value="{{this._id}}" {{#if_meh_eq ../bookinstance.book._id this._id}}selected{{/if_meh_eq}}>{{this.title}}</option>
+            {{else}}
+            <option value="{{this._id}}">{{this.title}}</option>
+            {{/if}}
+        {{/each_sort_name}}
+    </select>
+    </div>
+    <div class="form-group">
+        <label for="imprint">Imprint: </label>
+        <input type="text" placeholder="Publisher and date information" id="imprint" class="form-control" name="imprint" required="true" value={{#if_eq undefined bookinstance}}""{{else}}"{{bookinstance.imprint}}"{{/if_eq}}>
+    </div>
+    <div class="form-group">
+        <label for="due_back">Date when book available:</label>
+        <input type="date" id="due_back" name="due_back" class="form-control" value="{{#if bookinstance}}{{bookinstance.due_back_input}}{{/if}}">
+    </div>
+    <div class="form-group">
+        <label for="status">Status: </label>
+        <select name="status" id="status" class="form-control" placeholder="Select status" required="true">
+            <option value="Maintenance" {{#if_eq bookinstance.status "Maintenance"}}selected{{/if_eq}}>Maintenance</option>
+            <option value="Available" {{#if_eq bookinstance.status "Available"}}selected{{/if_eq}}>Available</option>
+            <option value="Loaned" {{#if_eq bookinstance.status "Loaned"}}selected{{/if_eq}}>Loaned</option>
+            <option value="Reserved" {{#if_eq bookinstance.status "Reserved"}}selected{{/if_eq}}>Reserved</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{{#if errors}}
+<ul>
+    {{#each errors}}
+    <li>{{this.msg}}</li>
+    {{/each}}
+</ul>
+{{/if}}

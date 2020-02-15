@@ -1,0 +1,19 @@
+<h1>{{title}}</h1>
+
+<ul>
+    {{#each bookinstance_list}}
+    <li><a href="{{this.url}}">{{this.book.title}} - {{this.imprint}}</a>
+    {{#if_eq this.status "Available"}}
+    <span class="text-success">{{this.status}}</span>
+    {{else}}
+            {{#if_eq this.status "Maintenance"}}
+    <span class="text-danger">{{this.status}}</span>
+    {{else}}
+    <span class="text-warning">{{this.status}}</span>
+    {{/if_eq}}
+    {{/if_eq}}
+    {{#if_neq this.status "Available"}}
+    <span>(Due: {{this.due_back_formatted}})</span>
+    {{/if_neq}}
+    {{/each}}
+</ul>

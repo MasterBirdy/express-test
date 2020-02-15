@@ -1,0 +1,52 @@
+<h1>{{title}}</h1>
+
+<form action="" method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" class="form-control" placeholder="Name of book" name="title" required="true"
+          value="{{#if book}}{{book.title}}{{/if}}">
+    </div>
+    <div class="form-group">
+        <label for="author">Author:</label>
+        <select name="author" id="author" class="form-control" required="true" placeholder="Select author">
+        {{#each authors}}
+                <option value="{{this._id}}" 
+                {{#if ../book.author}}{{#if_meh_eq ../book.author._id this._id}}selected{{/if_meh_eq}}{{/if}}>
+                {{this.name}} 
+                </option>
+        {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="summary">Summary:</label>
+        <textarea name="summary" id="summary" rows="3" class="form-control" required="true">
+            {{#if book}}
+            {{book.summary}}
+            {{/if}}
+        </textarea>
+            </div>
+    <div class="form-group">
+        <label for="isbn">ISBN: </label>
+        <input type="text" placeholder="ISBN13" name="isbn" required="true" value="{{#if book}}{{book.isbn}}{{/if}}">
+    </div>
+    <div class="form-group">
+        <label>Genre:</label>
+        <div>
+            {{#each genres}}
+            <div style="display: inline; padding-right: 10px;">
+                <input type="checkbox" class="checkbox-input" name="genre" id="{{this._id}}" value="{{this._id}}"
+                {{#check_with_all this._id ../book.genre}}checked{{/check_with_all}}>
+                <label for="{{this._id}}">{{this.name}}</label>
+            </div>
+            {{/each}}
+        </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+{{#if errors}}
+<ul>
+    {{#each errors}}
+    <li>{{this.msg}}</li>
+    {{/each}}
+</ul>
+{{/if}}
